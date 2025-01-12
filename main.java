@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class main {
@@ -119,9 +121,15 @@ public class main {
                     }
                 }
             }
-
-
-
+            try(FileWriter writer = new FileWriter("expenses.csv")) {
+                writer.write("id,date,description,amount\n");
+                for(Item item : inventory.getItems()) {
+                    writer.write(item.getId() + "," + item.getDate() + "," + item.getName() + "," + item.getPrice() + "\n");
+                }
+            }
+            catch(IOException e) {
+                System.out.println("Error writing expenses.csv");
+            }
         }
     }
 }
