@@ -14,9 +14,6 @@ public class main {
         int count = items.getLast().getId();
 
 
-
-
-
         while(true) {
             System.out.println("Enter command or 'q' to save and quit");
             String input = scanner.nextLine();
@@ -41,27 +38,35 @@ public class main {
             if(commands[0].equals("add") && commands.length == 3) {
                 String name = commands[1];
                 double price = Double.parseDouble(commands[2]);
+                if(price <= 0) {
+                    System.out.println("Expense cannot be negative. Please try again.");
+                    continue;
+                }
                 int id = count + 1;
                 count++;
                 inventory.addItem(new Item(name, price, id));
-                System.out.println("Added item \"" + name + "\" with price $" + price + " and id " + id);
+                System.out.println("Expense added successfully " + "(ID: " + id + ")");
             }
 
             // delete command
             if(commands[0].equals("delete") && commands.length == 2) {
                 String id = commands[1];
+                int counter = 0;
                 for(Item item : inventory.getItems()) {
                     if(id.equals(String.valueOf(item.getId()))) {
+                        counter++;
                         inventory.removeItem(item);
                         System.out.println("Item " + item.getId() + " deleted");
-                        break;
                     }
+                }
+                if(counter == 0) {
+                    System.out.println("Item not found. Please try again.");
                 }
             }
 
             // overall summary command
             if(commands[0].equals("summary") && commands.length == 1) {
-                int sum = 0;
+                double sum = 0;
                 for(Item item : inventory.getItems()) {
                     sum += item.getPrice();
                 }
@@ -69,7 +74,7 @@ public class main {
             }
             // date specific summary command
             if(commands[0].equals("summary") && commands.length == 3) {
-                int sum = 0;
+                double sum = 0;
                 if(Objects.equals(commands[1], "month")) {
                     if(commands[2].length() == 1) {
                         commands[2] = '0' + commands[2];
@@ -90,6 +95,33 @@ public class main {
                     System.out.println("Expenses this year: $" + sum);
                 }
             }
+            //update command based on the 3 input being a number or word
+            if(commands[0].equals("update") && commands.length == 3) {
+                int id = Integer.parseInt(commands[1]);
+                String update = commands[2];
+                try {
+                    int updatePrice = Integer.parseInt(update);
+                    for(Item item : inventory.getItems()) {
+                        if(item.getId() == id) {
+                            item.setPrice(updatePrice);
+                            System.out.println("Item " + item.getId() + " updated to $" + updatePrice);
+                            break;
+                        }
+                    }
+                }
+                catch(NumberFormatException e) {
+                    for(Item item : inventory.getItems()) {
+                        if(item.getId() == id) {
+                            item.setName(update);
+                            System.out.println("Item " + item.getId() + " updated to " + update);
+                            break;
+                        }
+                    }
+                }
+            }
+
+
+
         }
     }
 }
