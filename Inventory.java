@@ -2,14 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory {
-    List<Item> items;
+    private List<Item> items;
 
     public Inventory() {
-        items = new ArrayList<Item>();
+        items = new ArrayList<>();
     }
-    public Inventory(List<Item> items) {
-        this.items = items;
-    }
+
     public List<Item> getItems() {
         return items;
     }

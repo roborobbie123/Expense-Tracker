@@ -49,19 +49,19 @@ public class Item {
 
     public String getYear() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = formatter.format(date);
+        String dateString = formatter.format(dateObject);
         String year = dateString.substring(0, 4);
         return year;
     }
     public String getMonth() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = formatter.format(date);
+        String dateString = formatter.format(dateObject);
         String month = dateString.substring(5, 7);
         return month;
     }
     public String getDay() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = formatter.format(date);
+        String dateString = formatter.format(dateObject);
         String day = dateString.substring(8);
         return day;
     }

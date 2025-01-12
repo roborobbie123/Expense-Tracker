@@ -76,14 +76,18 @@ public class main {
 
             // delete command
             if(commands[0].equals("delete") && commands.length == 2) {
-                String id = commands[1];
+                int id = Integer.parseInt(commands[1]);
                 int counter = 0;
-                for(Item item : inventory.getItems()) {
-                    if(id.equals(String.valueOf(item.getId()))) {
-                        counter++;
-                        inventory.removeItem(item);
-                        System.out.println("Item " + item.getId() + " deleted");
-                    }
+                for(int i = items.size() - 1; i >= 0 ; i--) {
+                   Item item = items.get(i);
+                   if(item.getId() == id) {
+                       items.remove(i);
+                       System.out.println("Expense deleted successfully " + "(ID: " + id + ")");
+                       counter++;
+                       if(items.size() == 0) {
+                           System.out.println("Nothing left to delete");
+                       }
+                   }
                 }
                 if(counter == 0) {
                     System.out.println("Item not found. Please try again.");
