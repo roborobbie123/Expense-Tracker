@@ -5,7 +5,8 @@ public class Item {
     private double price;
     private String name;
     private int id;
-    private Date date;
+    private String date;
+    private Date dateObject = new Date();
 
     public Item() {}
 
@@ -13,33 +14,36 @@ public class Item {
         this.name = name;
         this.price = price;
         this.id = id;
-        this.date = new Date();
+        this.date = this.getDate();
     }
 
     public double getPrice() {
         return price;
     }
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
+
     public String getName() {
         return name;
     }
     public void setName(String name) {
         this.name = name;
     }
+
     public int getId() {
         return id;
     }
     public void setId(int id) {
         this.id = id;
     }
+
     public String getDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = formatter.format(date);
+        String dateString = formatter.format(dateObject);
         return dateString;
     }
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

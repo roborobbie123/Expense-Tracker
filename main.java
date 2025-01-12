@@ -1,20 +1,44 @@
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class main {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         Inventory inventory = new Inventory();
-        Item item1 = new Item("food", 35, 1);
-        Item item2 = new Item("drinks", 50, 2);
-        inventory.addItem(item1);
-        inventory.addItem(item2);
+
+        try(BufferedReader reader = new BufferedReader(new FileReader("expenses.csv"))){
+            String line;
+            List<String> data = new ArrayList<>();
+            while((line = reader.readLine()) != null){
+                data.add(line);
+            }
+            String dataString = data.toString().trim().replace("[", "").replace("]", "").replace(" ", "");
+            String[] dataArray = dataString.split(",");
+
+            if(dataArray[0].equals("id") && dataArray[1].equals("date") && dataArray[2].equals("description") && dataArray[3].equals("amount")){
+                for(int i = 4; i < dataArray.length; i = i + 4){
+                    Item item = new Item();
+                    item.setId(Integer.parseInt(dataArray[i]));
+                    item.setDate(dataArray[i+1]);
+                    item.setName(dataArray[i+2]);
+                    item.setPrice(Double.parseDouble(dataArray[i+3]));
+                    inventory.addItem(item);
+                }
+            }
+        }
+        catch(IOException e){
+            System.out.println("Add your first expense");
+        }
 
         List<Item> items = inventory.getItems();
+        int count;
 
-        int count = items.getLast().getId();
-
+        if(items.size() > 0){
+            count = items.getLast().getId();
+        } else {
+            count = 0;
+        }
 
         while(true) {
             System.out.println("Enter command or 'q' to save and quit");
@@ -121,6 +145,7 @@ public class main {
                     }
                 }
             }
+            // writing expenses list to csv file
             try(FileWriter writer = new FileWriter("expenses.csv")) {
                 writer.write("id,date,description,amount\n");
                 for(Item item : inventory.getItems()) {
