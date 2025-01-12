@@ -24,9 +24,9 @@ public class Inventory {
         items.remove(item);
     }
     public void listItems() {
-        System.out.println("#\t\tID\t\tDate\t\tDescription\t\tAmount");
+        System.out.println("#\t\tID\t\t\tDate\t\tDescription\t\t\tAmount");
         for (Item item : items) {
-            System.out.println("#\t\t" + item.getId() + "\t\t" + item.getDate() + "\t" + item.getName() + "\t\t\t" + item.getPrice());
+            System.out.println("#\t\t" + item.getId() + "\t\t" + item.getDate() + "\t\t" + item.getName() + "\t\t\t\t$ " + item.getPrice());
         }
     }
 

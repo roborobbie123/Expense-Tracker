@@ -9,6 +9,12 @@ public class main {
         inventory.addItem(item1);
         inventory.addItem(item2);
 
+        List<Item> items = inventory.getItems();
+
+        int count = items.getLast().getId();
+
+
+
 
 
         while(true) {
@@ -31,13 +37,23 @@ public class main {
                 inventory.listItems();
             }
 
+            // add command
+            if(commands[0].equals("add") && commands.length == 3) {
+                String name = commands[1];
+                double price = Double.parseDouble(commands[2]);
+                int id = count + 1;
+                count++;
+                inventory.addItem(new Item(name, price, id));
+                System.out.println("Added item \"" + name + "\" with price $" + price + " and id " + id);
+            }
+
             // delete command
             if(commands[0].equals("delete") && commands.length == 2) {
                 String id = commands[1];
                 for(Item item : inventory.getItems()) {
                     if(id.equals(String.valueOf(item.getId()))) {
                         inventory.removeItem(item);
-                        System.out.println("Item deleted.");
+                        System.out.println("Item " + item.getId() + " deleted");
                         break;
                     }
                 }
@@ -49,7 +65,7 @@ public class main {
                 for(Item item : inventory.getItems()) {
                     sum += item.getPrice();
                 }
-                System.out.println("Total expenses: " + sum);
+                System.out.println("Total expenses: $" + sum);
             }
             // date specific summary command
             if(commands[0].equals("summary") && commands.length == 3) {
@@ -63,7 +79,7 @@ public class main {
                             sum += item.getPrice();
                         }
                     }
-                    System.out.println("Expenses this month: " + sum);
+                    System.out.println("Expenses this month: $" + sum);
                 }
                 if(Objects.equals(commands[1], "year")) {
                     for(Item item : inventory.getItems()) {
@@ -71,7 +87,7 @@ public class main {
                             sum += item.getPrice();
                         }
                     }
-                    System.out.println("Expenses this year: " + sum);
+                    System.out.println("Expenses this year: $" + sum);
                 }
             }
         }

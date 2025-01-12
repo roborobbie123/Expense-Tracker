@@ -2,21 +2,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Item {
-    private int price;
+    private double price;
     private String name;
     private int id;
     private Date date;
 
     public Item() {}
 
-    public Item(String name, int price, int id) {
+    public Item(String name, double price, int id) {
         this.name = name;
         this.price = price;
         this.id = id;
         this.date = new Date();
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
     public void setPrice(int price) {
